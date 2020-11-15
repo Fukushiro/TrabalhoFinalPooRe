@@ -175,7 +175,7 @@ public class Console extends Produto {
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        Dao.getInstance().closeConnection();
         return retorno;
     }
     
