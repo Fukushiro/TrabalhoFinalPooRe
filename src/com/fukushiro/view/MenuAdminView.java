@@ -43,6 +43,8 @@ public class MenuAdminView extends javax.swing.JFrame {
         menuItemConsoleGerenciar = new javax.swing.JMenuItem();
         menuEmpresa = new javax.swing.JMenu();
         menuItemEmpresaGerenciar = new javax.swing.JMenuItem();
+        menuGenero = new javax.swing.JMenu();
+        menuItemGerenciarGenero = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +83,18 @@ public class MenuAdminView extends javax.swing.JFrame {
 
         jMenuBar1.add(menuEmpresa);
 
+        menuGenero.setText("Genero");
+
+        menuItemGerenciarGenero.setText("Gerenciar");
+        menuItemGerenciarGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemGerenciarGeneroActionPerformed(evt);
+            }
+        });
+        menuGenero.add(menuItemGerenciarGenero);
+
+        jMenuBar1.add(menuGenero);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,6 +124,10 @@ public class MenuAdminView extends javax.swing.JFrame {
     private void menuItemEmpresaGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEmpresaGerenciarActionPerformed
         this.controller.abrirGerenciarEmpresa();
     }//GEN-LAST:event_menuItemEmpresaGerenciarActionPerformed
+
+    private void menuItemGerenciarGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciarGeneroActionPerformed
+        this.controller.abrirGerenciarGenero();
+    }//GEN-LAST:event_menuItemGerenciarGeneroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,8 +169,10 @@ public class MenuAdminView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuConsole;
     private javax.swing.JMenu menuEmpresa;
+    private javax.swing.JMenu menuGenero;
     private javax.swing.JMenuItem menuItemConsoleGerenciar;
     private javax.swing.JMenuItem menuItemEmpresaGerenciar;
+    private javax.swing.JMenuItem menuItemGerenciarGenero;
     // End of variables declaration//GEN-END:variables
 
     public MenuAdminController getController() {

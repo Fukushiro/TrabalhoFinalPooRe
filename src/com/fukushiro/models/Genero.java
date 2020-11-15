@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -78,7 +80,7 @@ public class Genero {
     public boolean update(){
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
-        String sql = "update gerentes set nome=? where id=?";
+        String sql = "update generos set nome=? where id=?";
         
         try {
             this.ps = con.prepareStatement(sql);
@@ -97,7 +99,7 @@ public class Genero {
     public boolean delete(){
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
-        String sql = "delete from gerentes where id = ?";
+        String sql = "delete from generos where id = ?";
         
         try {
             this.ps = con.prepareStatement(sql);
@@ -108,6 +110,56 @@ public class Genero {
         }
         
         return retorno;
+    }
+    
+    
+    public TableModel getWhereLike(String l){
+        TableModel tb = null;
+        
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "select * from generos where nome like ?";
+        
+        try {
+            this.ps = con.prepareStatement(sql);
+            this.ps.setString(1, l+"%");
+            this.rs = this.ps.executeQuery();
+            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome"}, 0);
+            
+            while(rs.next()){
+                
+                dtm.addRow(new Object[]{rs.getInt("id"), rs.getString("nome")});
+            }
+            tb = dtm;
+        } catch (SQLException ex) {
+            Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Dao.getInstance().closeConnection();
+        return tb;
+    }
+    
+    public Genero where(int id, boolean close){
+        Genero e = null;
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "select * from generos where id=?";
+        
+        try {
+            this.ps = con.prepareStatement(sql);
+            this.ps.setInt(1, id);
+            this.rs = this.ps.executeQuery();
+            while(rs.next()){
+                int idE = rs.getInt("id");
+                String nome = rs.getString("nome");
+                e =  new Genero(id, nome);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(close){
+            Dao.getInstance().closeConnection();
+        }
+        con = null;
+        return e;
     }
     //função
 
