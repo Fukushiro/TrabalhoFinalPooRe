@@ -36,6 +36,7 @@ public class ClienteDepositarController {
         }
         Singleton.getInstance().getUsuarioLogado().depositar(val);
         clear();
+        Singleton.getInstance().getUsuarioLogado().updateSaldo();
     }
     
 }

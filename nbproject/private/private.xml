@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/view/MenuClienteView.java</file>
-            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/controller/MenuClienteController.java</file>
+            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/view/ClienteCarrinhoView.java</file>
+            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/models/Carrinho.java</file>
+            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/controller/ClienteCarrinhoController.java</file>
+            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/models/Console.java</file>
+            <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/models/Compra.java</file>
             <file>file:/C:/Users/jpflc/Desktop/Programacao/java/workspaces/netbeansFaculdade/exercicios/trabalhoFinalR/trabalho_finalR/src/com/fukushiro/models/Usuario.java</file>
         </group>
     </open-files>

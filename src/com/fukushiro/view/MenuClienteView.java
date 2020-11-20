@@ -41,6 +41,10 @@ public class MenuClienteView extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         Dinheiro = new javax.swing.JMenu();
         menuItemDinheiroDepositar = new javax.swing.JMenuItem();
+        MenuLoja = new javax.swing.JMenu();
+        menuItemLojaComprar = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +71,30 @@ public class MenuClienteView extends javax.swing.JFrame {
 
         jMenuBar1.add(Dinheiro);
 
+        MenuLoja.setText("Loja");
+
+        menuItemLojaComprar.setText("comprar");
+        menuItemLojaComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLojaComprarActionPerformed(evt);
+            }
+        });
+        MenuLoja.add(menuItemLojaComprar);
+
+        jMenuBar1.add(MenuLoja);
+
+        jMenu1.setText("Carrinho");
+
+        jMenuItem1.setText("Gerenciar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,6 +119,14 @@ public class MenuClienteView extends javax.swing.JFrame {
     private void menuItemDinheiroDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDinheiroDepositarActionPerformed
         this.controller.abrirDepositar();
     }//GEN-LAST:event_menuItemDinheiroDepositarActionPerformed
+
+    private void menuItemLojaComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLojaComprarActionPerformed
+        this.controller.abrirLojaComprar();
+    }//GEN-LAST:event_menuItemLojaComprarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.controller.abrirGerenciarCarrinho();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,9 +165,13 @@ public class MenuClienteView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Dinheiro;
+    private javax.swing.JMenu MenuLoja;
     private javax.swing.JDesktopPane desktop;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuItemDinheiroDepositar;
+    private javax.swing.JMenuItem menuItemLojaComprar;
     // End of variables declaration//GEN-END:variables
 
     public MenuClienteController getController() {

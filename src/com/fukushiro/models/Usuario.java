@@ -26,6 +26,7 @@ public class Usuario {
     //1->admin
     private int tipo;
     private double saldo;
+    private Carrinho carrinho;
     //dao
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -37,6 +38,11 @@ public class Usuario {
         this.senha = senha;
         this.tipo = tipo;
         this.saldo = saldo;
+        this.carrinho = new Carrinho(this);
+    }
+
+    public Usuario() {
+        this.carrinho = new Carrinho(this);
     }
 
     //funções dao
@@ -86,7 +92,8 @@ public class Usuario {
         return lista;
     }
 
-    public Usuario getUsuario(int outroId) {
+    public Usuario getUsuario(int outroId, boolean close) {
+        Usuario u = null;
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from usuarios where id=?";
         try {
@@ -99,15 +106,17 @@ public class Usuario {
                 String senha = rs.getString("senha");
                 int tipo = rs.getInt("tipo");
                 double saldo = rs.getDouble("saldo");
-                return new Usuario(id, nome, senha, tipo, saldo);
+                u = new Usuario(id, nome, senha, tipo, saldo);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        Dao.getInstance().closeConnection();
+        if (close) {
+            Dao.getInstance().closeConnection();
+        }
+        con = null;
         rs = null;
-        return null;
+        return u;
 
     }
 
@@ -118,7 +127,7 @@ public class Usuario {
         Usuario u = null;
         try {
             ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, nome);
             ps.setString(2, password);
             rs = ps.executeQuery();
@@ -162,6 +171,16 @@ public class Usuario {
         this.saldo += saldo;
     }
 
+    public boolean sacar(double saldo) {
+        if (this.saldo < saldo) {
+            System.out.println("Usuario-sacar:falhou");
+            return false;
+        }
+        this.saldo -= saldo;
+        System.out.println("Usuario-sacar:" + saldo);
+        return true;
+    }
+
     //get e set
     public int getId() {
         return id;
@@ -201,6 +220,30 @@ public class Usuario {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
+    }
+
+    public Carrinho getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
+    }
+
+    public PreparedStatement getPs() {
+        return ps;
+    }
+
+    public void setPs(PreparedStatement ps) {
+        this.ps = ps;
+    }
+
+    public ResultSet getRs() {
+        return rs;
+    }
+
+    public void setRs(ResultSet rs) {
+        this.rs = rs;
     }
 
 }

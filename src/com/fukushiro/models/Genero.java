@@ -31,10 +31,11 @@ public class Genero {
         this.id = id;
         this.nome = nome;
     }
-    
-    public Genero(){
-        
+
+    public Genero() {
+
     }
+
     //dao
     public boolean save() {
         Connection con = Dao.getInstance().getConnection();
@@ -53,6 +54,7 @@ public class Genero {
         con = null;
         return true;
     }
+
     public ArrayList<Genero> getAll(boolean close) {
         ArrayList<Genero> lista = new ArrayList<Genero>();
         Connection con = Dao.getInstance().getConnection();
@@ -63,7 +65,7 @@ public class Genero {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");
-                
+
                 lista.add(new Genero(id, nome));
             }
         } catch (SQLException ex) {
@@ -76,31 +78,31 @@ public class Genero {
         }
         return lista;
     }
-    
-    public boolean update(){
+
+    public boolean update() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "update generos set nome=? where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             ps.setString(1, this.nome);
             ps.setInt(2, this.id);
             this.ps.executeUpdate();
-            
-            retorno=  true;
+
+            retorno = true;
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
         Dao.getInstance().closeConnection();
         return retorno;
     }
-    
-    public boolean delete(){
+
+    public boolean delete() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "delete from generos where id = ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, this.id);
@@ -109,54 +111,58 @@ public class Genero {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
         Dao.getInstance().closeConnection();
-        
+
         return retorno;
     }
-    
-    
-    public TableModel getWhereLike(String l){
+
+    public TableModel getWhereLike(String l) {
         TableModel tb = null;
-        
+
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from generos where nome like ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
-            this.ps.setString(1, l+"%");
+            this.ps.setString(1, l + "%");
             this.rs = this.ps.executeQuery();
-            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome"}, 0);
-            
-            while(rs.next()){
-                
+            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome"}, 0) {
+                @Override
+                public boolean isCellEditable(int i, int i1) {
+                    return false; //To change body of generated methods, choose Tools | Templates.
+                }
+            };
+
+            while (rs.next()) {
+
                 dtm.addRow(new Object[]{rs.getInt("id"), rs.getString("nome")});
             }
             tb = dtm;
         } catch (SQLException ex) {
             Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Dao.getInstance().closeConnection();
         return tb;
     }
-    
-    public Genero where(int id, boolean close){
+
+    public Genero where(int id, boolean close) {
         Genero e = null;
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from generos where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, id);
             this.rs = this.ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int idE = rs.getInt("id");
                 String nome = rs.getString("nome");
-                e =  new Genero(id, nome);
+                e = new Genero(id, nome);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(close){
+        if (close) {
             Dao.getInstance().closeConnection();
         }
         con = null;

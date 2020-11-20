@@ -29,7 +29,7 @@ public class Empresa {
 
     public Empresa() {
     }
-    
+
     public Empresa(int id, String nome) {
         this.id = id;
         this.nome = nome;
@@ -53,7 +53,7 @@ public class Empresa {
         con = null;
         return true;
     }
-    
+
     public ArrayList<Empresa> getAll(boolean close) {
         ArrayList<Empresa> lista = new ArrayList<Empresa>();
         Connection con = Dao.getInstance().getConnection();
@@ -64,7 +64,7 @@ public class Empresa {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");
-                
+
                 lista.add(new Empresa(id, nome));
             }
         } catch (SQLException ex) {
@@ -77,81 +77,85 @@ public class Empresa {
         }
         return lista;
     }
-    
-    
-    public TableModel getWhereLike(String l){
+
+    public TableModel getWhereLike(String l) {
         TableModel tb = null;
-        
+
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from empresas where nome like ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
-            this.ps.setString(1, l+"%");
+            this.ps.setString(1, l + "%");
             this.rs = this.ps.executeQuery();
-            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome"}, 0);
-            
-            while(rs.next()){
-                
+            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome"}, 0) {
+                @Override
+                public boolean isCellEditable(int i, int i1) {
+                    return false; //To change body of generated methods, choose Tools | Templates.
+                }
+            };
+
+            while (rs.next()) {
+
                 dtm.addRow(new Object[]{rs.getInt("id"), rs.getString("nome")});
             }
             tb = dtm;
         } catch (SQLException ex) {
             Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Dao.getInstance().closeConnection();
         return tb;
     }
-    
-    public Empresa where(int id, boolean close){
+
+    public Empresa where(int id, boolean close) {
         Empresa e = null;
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from empresas where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, id);
             this.rs = this.ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int idE = rs.getInt("id");
                 String nome = rs.getString("nome");
-                e =  new Empresa(id, nome);
+                e = new Empresa(id, nome);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(close){
+        if (close) {
             Dao.getInstance().closeConnection();
         }
         con = null;
         return e;
     }
-    
-    public boolean update(){
+
+    public boolean update() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "update empresas set nome=? where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             ps.setString(1, this.nome);
             ps.setInt(2, this.id);
             this.ps.executeUpdate();
-            
-            retorno=  true;
+
+            retorno = true;
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
         Dao.getInstance().closeConnection();
         return retorno;
     }
-    
-    public boolean delete(){
+
+    public boolean delete() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "delete from empresas where id = ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, this.id);
@@ -162,14 +166,12 @@ public class Empresa {
         Dao.getInstance().closeConnection();
         return retorno;
     }
-    
 
     //funcoes
-    public String toString(){
+    public String toString() {
         return this.nome;
     }
-    
-    
+
     //
     public int getId() {
         return id;

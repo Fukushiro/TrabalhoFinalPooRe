@@ -5,6 +5,8 @@
  */
 package com.fukushiro.models;
 
+import com.fukushiro.interfaces.ICompravel;
+
 /**
  *
  * @author jpflc
@@ -26,6 +28,17 @@ public class Produto {
     }
     
     
+    
+    //func
+    public boolean remover(int quantidade){
+        if(quantidade > this.quantidade){
+            return false;
+        }
+        this.quantidade-=quantidade;
+        return true;
+    }
+    
+    //get e set
 
     public int getId() {
         return id;
@@ -58,6 +71,8 @@ public class Produto {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+   
     
     
 }

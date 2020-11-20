@@ -5,6 +5,7 @@
  */
 package com.fukushiro.models;
 
+import com.fukushiro.interfaces.ICompravel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ import net.proteanit.sql.DbUtils;
  *
  * @author jpflc
  */
-public class Console extends Produto {
+public class Console extends Produto implements ICompravel {
 
     private Empresa empresa;
     //dao
@@ -35,11 +36,31 @@ public class Console extends Produto {
     public Console() {
     }
 
-    
+    //funções
+    @Override
+    public boolean comprar(Usuario u) {
+        if (checkComprar(u)) {
+            Console c = new Console().where(this.getId(), true);
+            if (c.remover(this.getQuantidade()) && u.sacar(this.getPreco() * this.getQuantidade())) {
+                c.update();
+                u.updateSaldo();
+                return true;
+            }
+        }
+        return false;
+    }
 
-    
-    
-    
+    @Override
+    public boolean checkComprar(Usuario u) {
+        Console c = new Console().where(this.getId(), true);
+        if (c.getQuantidade() < this.getQuantidade()) {
+            return false;
+        }
+        if (u.getSaldo() < (c.getPreco() * this.getQuantidade())) {
+            return false;
+        }
+        return true;
+    }
 
     //funções dao
     public boolean save() {
@@ -61,7 +82,7 @@ public class Console extends Produto {
         con = null;
         return true;
     }
-    
+
     public ArrayList<Console> getAll(boolean close) {
         ArrayList<Console> lista = new ArrayList<Console>();
         Connection con = Dao.getInstance().getConnection();
@@ -87,21 +108,47 @@ public class Console extends Produto {
         }
         return lista;
     }
-    
-    
-    public TableModel getWhereLike(String l){
-        TableModel tb = null;
-        
+
+    public ArrayList<Console> getLike(String l) {
+        ArrayList<Console> consoles = new ArrayList<Console>();
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from consoles where nome like ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
-            this.ps.setString(1, l+"%");
+            this.ps.setString(1, l + "%");
             this.rs = this.ps.executeQuery();
-            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome", "preco", "quantidade", "empresa"}, 0);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
+                Empresa e = new Empresa().where(rs.getInt("empresa"), false);
+                consoles.add(new Console(e, rs.getInt("id"), rs.getString("nome"), rs.getDouble("preco"), rs.getInt("quantidade")));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return consoles;
+    }
+
+    public TableModel getWhereLike(String l) {
+        TableModel tb = null;
+
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "select * from consoles where nome like ?";
+
+        try {
+            this.ps = con.prepareStatement(sql);
+            this.ps.setString(1, l + "%");
+            this.rs = this.ps.executeQuery();
+            DefaultTableModel dtm = new DefaultTableModel(new Object[]{"id", "nome", "preco", "quantidade", "empresa"}, 0) {
+                @Override
+                public boolean isCellEditable(int i, int i1) {
+                    return false; //To change body of generated methods, choose Tools | Templates.
+                }
+            };
+
+            while (rs.next()) {
                 Empresa e = new Empresa().where(rs.getInt("empresa"), false);
                 dtm.addRow(new Object[]{rs.getInt("id"), rs.getString("nome"), "R$" + rs.getDouble("preco"), rs.getInt("quantidade"), e.getNome()});
             }
@@ -109,43 +156,43 @@ public class Console extends Produto {
         } catch (SQLException ex) {
             Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Dao.getInstance().closeConnection();
         return tb;
     }
-    
-    public Console where(int id, boolean close){
+
+    public Console where(int id, boolean close) {
         Console e = null;
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from consoles where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, id);
             this.rs = this.ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int idE = rs.getInt("id");
                 String nome = rs.getString("nome");
                 double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
                 Empresa empresa = new Empresa().where(rs.getInt("empresa"), false);
-                e =  new Console(empresa, id, nome, preco, quantidade);
+                e = new Console(empresa, id, nome, preco, quantidade);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(close){
+        if (close) {
             Dao.getInstance().closeConnection();
         }
         con = null;
         return e;
     }
-    
-    public boolean update(){
+
+    public boolean update() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "update consoles set nome=?, preco=?, quantidade=?, empresa=? where id=?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             ps.setString(1, this.getNome());
@@ -154,20 +201,20 @@ public class Console extends Produto {
             ps.setInt(4, this.getEmpresa().getId());
             ps.setInt(5, this.getId());
             this.ps.executeUpdate();
-            
-            retorno=  true;
+
+            retorno = true;
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }
         Dao.getInstance().closeConnection();
         return retorno;
     }
-    
-    public boolean delete(){
+
+    public boolean delete() {
         boolean retorno = false;
         Connection con = Dao.getInstance().getConnection();
         String sql = "delete from consoles where id = ?";
-        
+
         try {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, this.getId());
@@ -178,9 +225,8 @@ public class Console extends Produto {
         Dao.getInstance().closeConnection();
         return retorno;
     }
-    
-    //funções
 
+    //get e set
     public Empresa getEmpresa() {
         return empresa;
     }
