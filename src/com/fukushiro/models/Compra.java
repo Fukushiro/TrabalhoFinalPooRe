@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +35,10 @@ public class Compra {
         this.tipo = tipo;
         this.produto = produto;
         this.valor = valor;
+    }
+    
+    public Compra(){
+        
     }
     //funções dao
     public boolean save() {
@@ -79,6 +85,20 @@ public class Compra {
             con = null;
         }
         return lista;
+    }
+    
+    public ResultSet getRsLike(String like){
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "select c.id, u.nome, c.produto, c.valor from compras as c  left join usuarios as u on c.usuario = u.id where c.produto like ?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, like+"%");
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(Compra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
     }
     
     

@@ -29,7 +29,7 @@ public class ClienteDepositarController {
         this.view.getLblValorAtual().setText("R$"+String.valueOf(saldo));
     }
     
-    public void depositar(){
+    public void depositar() throws DepositarNegativoException{
         double val = Double.valueOf(this.view.getTxtValor().getText());
         if(val<0){
             throw new DepositarNegativoException();

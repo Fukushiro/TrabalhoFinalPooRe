@@ -16,7 +16,9 @@ import javax.swing.JTable;
  * @author jpflc
  */
 public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
+
     private ClienteCarrinhoController controller;
+
     /**
      * Creates new form ClienteCarrinhoView
      */
@@ -63,6 +65,11 @@ public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         btnComprar.setText("Comprar");
@@ -73,6 +80,11 @@ public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
         });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         btnLimpar.setText("Limpar");
 
@@ -121,6 +133,14 @@ public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         this.controller.comprar();
     }//GEN-LAST:event_btnComprarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        this.controller.remover();
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        this.controller.onTableClick();
+    }//GEN-LAST:event_tableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

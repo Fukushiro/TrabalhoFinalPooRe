@@ -25,7 +25,6 @@ public class Carrinho {
     public boolean comprar() {
         for (ICompravel p : produtos) {
             if (!p.checkComprar(owner)) {
-                System.out.println("Carrinho-comprar : Falhou");
                 return false;
             }
 
@@ -33,6 +32,9 @@ public class Carrinho {
 
         for (ICompravel p : produtos) {
             p.comprar(owner);
+            String tipo = "produto";
+            Compra c = new Compra(0, owner, tipo, ((Produto) p).getNome(), ((Produto) p).getQuantidade() * ((Produto) p).getPreco());
+            c.save();
         }
         esvaziarCarrinho();
         return true;
@@ -42,6 +44,27 @@ public class Carrinho {
         this.produtos.add(produto);
     }
 
+    public boolean remover(ICompravel i2) {
+        Produto p2 = (Produto) i2;
+        for (ICompravel i : produtos) {
+            Produto p = (Produto) i;
+            if((p.getId() == p2.getId()) || (p.getQuantidade() == p2.getQuantidade())){
+                produtos.remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void remover(int pos){
+        for(int i = 0; i < this.produtos.size(); i++){
+            if(i == pos){
+                this.produtos.remove(i);
+            }
+        }
+    }
+    
     public void esvaziarCarrinho() {
         this.produtos = new ArrayList<ICompravel>();
     }

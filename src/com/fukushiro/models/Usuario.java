@@ -52,7 +52,7 @@ public class Usuario {
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, this.nome);
-            ps.setString(2, this.senha);
+            ps.setString(2, new Criptografia().criptografar(this.senha));
             ps.setInt(3, this.tipo);
             ps.setDouble(4, this.saldo);
             ps.execute();
@@ -129,7 +129,7 @@ public class Usuario {
             ps = con.prepareStatement(sql);
 
             ps.setString(1, nome);
-            ps.setString(2, password);
+            ps.setString(2, new Criptografia().criptografar(password));
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

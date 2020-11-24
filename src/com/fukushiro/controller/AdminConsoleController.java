@@ -5,6 +5,7 @@
  */
 package com.fukushiro.controller;
 
+import com.fukushiro.exceptions.NegativeQuantityException;
 import com.fukushiro.models.Console;
 import com.fukushiro.models.Empresa;
 import com.fukushiro.helper.AdminConsoleHelper;
@@ -101,8 +102,11 @@ public class AdminConsoleController {
         }
     }
 
-    public void cadastrar() {
+    public void cadastrar() throws NegativeQuantityException{
         Console console = (Console) this.helper.getObject();
+        if(console.getQuantidade() < 0){
+            throw new NegativeQuantityException();
+        }
         if (console != null) {
             console.save();
             JOptionPane.showMessageDialog(view, "Console cadastrado com sucesso");

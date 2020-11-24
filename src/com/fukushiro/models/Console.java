@@ -201,6 +201,7 @@ public class Console extends Produto implements ICompravel {
             ps.setInt(4, this.getEmpresa().getId());
             ps.setInt(5, this.getId());
             this.ps.executeUpdate();
+           
 
             retorno = true;
         } catch (SQLException ex) {
@@ -219,6 +220,7 @@ public class Console extends Produto implements ICompravel {
             this.ps = con.prepareStatement(sql);
             this.ps.setInt(1, this.getId());
             this.ps.execute();
+            retorno = true;
         } catch (SQLException ex) {
             Logger.getLogger(Empresa.class.getName()).log(Level.SEVERE, null, ex);
         }

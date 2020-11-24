@@ -35,6 +35,9 @@ public class Genero {
     public Genero() {
 
     }
+    public String toString(){
+        return this.nome;
+    }
 
     //dao
     public boolean save() {
@@ -144,6 +147,8 @@ public class Genero {
         Dao.getInstance().closeConnection();
         return tb;
     }
+    
+    
 
     public Genero where(int id, boolean close) {
         Genero e = null;

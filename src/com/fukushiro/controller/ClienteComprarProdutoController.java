@@ -7,6 +7,7 @@ package com.fukushiro.controller;
 
 import com.fukushiro.interfaces.ICompravel;
 import com.fukushiro.models.Console;
+import com.fukushiro.models.Jogo;
 import com.fukushiro.models.Produto;
 import com.fukushiro.models.Singleton;
 import com.fukushiro.view.ClienteComprarProdutoView;
@@ -49,7 +50,7 @@ public class ClienteComprarProdutoController {
                     produto = new Console().where(id, true);
 
                 } else if (tipo == "jogo") {
-
+                    produto = new Jogo().where(id, true);
                 }
             }
 
@@ -80,7 +81,8 @@ public class ClienteComprarProdutoController {
     public void fillTableLike() {
         String likeString = this.view.getTxtPesquisar().getText();
         ArrayList<Console> consoles = new Console().getLike(likeString);
-        DefaultTableModel dtm = new DefaultTableModel(new Object[]{"tipo", "id", "nome", "quantidade", "preco", "empresa"}, 0) {
+        ArrayList<Jogo> jogos = new Jogo().getLike(likeString);
+        DefaultTableModel dtm = new DefaultTableModel(new Object[]{"tipo", "id", "nome", "quantidade", "preco"}, 0) {
             @Override
             public boolean isCellEditable(int i, int i1) {
                 return false; //To change body of generated methods, choose Tools | Templates.
@@ -88,8 +90,12 @@ public class ClienteComprarProdutoController {
         };
 
         for (Console c : consoles) {
-            dtm.addRow(new Object[]{"console", c.getId(), c.getNome(), c.getQuantidade(), c.getPreco(), c.getEmpresa().getNome()});
+            dtm.addRow(new Object[]{"console", c.getId(), c.getNome(), c.getQuantidade(), c.getPreco()});
         }
+        for(Jogo j: jogos){
+            dtm.addRow(new Object[]{"jogo", j.getId(), j.getNome(), j.getQuantidade(), j.getPreco()});
+        }
+        
         this.view.getTable().setModel(dtm);
 
         TableColumnModel tcm = this.view.getTable().getColumnModel();
@@ -101,6 +107,7 @@ public class ClienteComprarProdutoController {
 
     public void colocarNoCarrinho() {
         setProduto();
+        System.out.println(produto);
         if (this.produto != null && ((Produto) this.produto).getQuantidade() > 0) {
 
             Singleton.getInstance().getUsuarioLogado().getCarrinho().addItem(produto);

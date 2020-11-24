@@ -6,6 +6,7 @@
 package com.fukushiro.controller;
 
 import com.fukushiro.view.ClienteCarrinhoView;
+import com.fukushiro.view.ClienteCompraView;
 import com.fukushiro.view.ClienteComprarProdutoView;
 import com.fukushiro.view.ClienteDepositarView;
 import com.fukushiro.view.MenuClienteView;
@@ -36,6 +37,12 @@ public class MenuClienteController {
     
     public void abrirGerenciarCarrinho(){
         ClienteCarrinhoView view = new ClienteCarrinhoView();
+        view.setVisible(true);
+        this.view.getDesktop().add(view);
+    }
+    
+    public void abrirGerenciarCompras(){
+        ClienteCompraView view = new ClienteCompraView();
         view.setVisible(true);
         this.view.getDesktop().add(view);
     }

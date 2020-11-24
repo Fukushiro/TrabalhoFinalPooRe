@@ -7,6 +7,7 @@ package com.fukushiro.view;
 
 import com.fukushiro.models.Empresa;
 import com.fukushiro.controller.AdminConsoleController;
+import com.fukushiro.exceptions.NegativeQuantityException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,9 +20,9 @@ import javax.swing.JTextField;
  * @author jpflc
  */
 public class AdminConsoleView extends javax.swing.JInternalFrame {
+
     private AdminConsoleController controller;
-    
-    
+
     /**
      * Creates new form AdminConsoleView
      */
@@ -190,11 +191,15 @@ public class AdminConsoleView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        this.controller.cadastrar();
+        try {
+            this.controller.cadastrar();
+        } catch (NegativeQuantityException e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void txtProcurarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProcurarKeyReleased
-       this.controller.populate();
+        this.controller.populate();
     }//GEN-LAST:event_txtProcurarKeyReleased
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -266,7 +271,6 @@ public class AdminConsoleView extends javax.swing.JInternalFrame {
     public void setTxtProcurar(JTextField txtProcurar) {
         this.txtProcurar = txtProcurar;
     }
-    
 
     public void setjButton2(JButton jButton2) {
         this.btnApagar = jButton2;
@@ -343,5 +347,5 @@ public class AdminConsoleView extends javax.swing.JInternalFrame {
     public void setTxtQuantidade(JTextField txtQuantidade) {
         this.txtQuantidade = txtQuantidade;
     }
-    
+
 }

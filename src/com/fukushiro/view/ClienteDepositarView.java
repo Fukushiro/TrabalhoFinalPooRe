@@ -6,6 +6,7 @@
 package com.fukushiro.view;
 
 import com.fukushiro.controller.ClienteDepositarController;
+import com.fukushiro.exceptions.DepositarNegativoException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -15,7 +16,9 @@ import javax.swing.JTextField;
  * @author jpflc
  */
 public class ClienteDepositarView extends javax.swing.JInternalFrame {
+
     private ClienteDepositarController controller;
+
     /**
      * Creates new form ClienteDepositarView
      */
@@ -86,8 +89,12 @@ public class ClienteDepositarView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void DepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositarActionPerformed
-        this.controller.depositar();
-        this.controller.setSaldoLabel();
+        try {
+            this.controller.depositar();
+            this.controller.setSaldoLabel();
+        } catch (DepositarNegativoException e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_DepositarActionPerformed
 
 

@@ -6,6 +6,7 @@
 package com.fukushiro.view;
 
 import com.fukushiro.controller.MenuAdminController;
+import com.fukushiro.models.Criptografia;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +46,8 @@ public class MenuAdminView extends javax.swing.JFrame {
         menuItemEmpresaGerenciar = new javax.swing.JMenuItem();
         menuGenero = new javax.swing.JMenu();
         menuItemGerenciarGenero = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuItemJogoGerenciar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +98,18 @@ public class MenuAdminView extends javax.swing.JFrame {
 
         jMenuBar1.add(menuGenero);
 
+        jMenu1.setText("Jogo");
+
+        menuItemJogoGerenciar.setText("Gerenciar");
+        menuItemJogoGerenciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemJogoGerenciarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItemJogoGerenciar);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,6 +143,10 @@ public class MenuAdminView extends javax.swing.JFrame {
     private void menuItemGerenciarGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciarGeneroActionPerformed
         this.controller.abrirGerenciarGenero();
     }//GEN-LAST:event_menuItemGerenciarGeneroActionPerformed
+
+    private void menuItemJogoGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemJogoGerenciarActionPerformed
+        this.controller.abrirGerenciarJogo();
+    }//GEN-LAST:event_menuItemJogoGerenciarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +185,7 @@ public class MenuAdminView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuConsole;
     private javax.swing.JMenu menuEmpresa;
@@ -173,6 +193,7 @@ public class MenuAdminView extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemConsoleGerenciar;
     private javax.swing.JMenuItem menuItemEmpresaGerenciar;
     private javax.swing.JMenuItem menuItemGerenciarGenero;
+    private javax.swing.JMenuItem menuItemJogoGerenciar;
     // End of variables declaration//GEN-END:variables
 
     public MenuAdminController getController() {

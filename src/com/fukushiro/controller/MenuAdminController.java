@@ -8,6 +8,7 @@ package com.fukushiro.controller;
 import com.fukushiro.view.AdminConsoleView;
 import com.fukushiro.view.AdminEmpresaView;
 import com.fukushiro.view.AdminGeneroView;
+import com.fukushiro.view.AdminJogoView;
 import com.fukushiro.view.MenuAdminView;
 
 /**
@@ -35,6 +36,12 @@ public class MenuAdminController {
     
     public void abrirGerenciarGenero(){
         AdminGeneroView view = new AdminGeneroView();
+        view.setVisible(true);
+        this.view.getDesktop().add(view);
+    }
+    
+    public void abrirGerenciarJogo(){
+        AdminJogoView view = new AdminJogoView();
         view.setVisible(true);
         this.view.getDesktop().add(view);
     }

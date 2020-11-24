@@ -45,6 +45,8 @@ public class MenuClienteView extends javax.swing.JFrame {
         menuItemLojaComprar = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuItemComprasVizualizar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +97,18 @@ public class MenuClienteView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Compras");
+
+        menuItemComprasVizualizar.setText("Vizualizar");
+        menuItemComprasVizualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemComprasVizualizarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemComprasVizualizar);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,6 +141,10 @@ public class MenuClienteView extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         this.controller.abrirGerenciarCarrinho();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void menuItemComprasVizualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemComprasVizualizarActionPerformed
+        this.controller.abrirGerenciarCompras();
+    }//GEN-LAST:event_menuItemComprasVizualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,8 +186,10 @@ public class MenuClienteView extends javax.swing.JFrame {
     private javax.swing.JMenu MenuLoja;
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuItemComprasVizualizar;
     private javax.swing.JMenuItem menuItemDinheiroDepositar;
     private javax.swing.JMenuItem menuItemLojaComprar;
     // End of variables declaration//GEN-END:variables
