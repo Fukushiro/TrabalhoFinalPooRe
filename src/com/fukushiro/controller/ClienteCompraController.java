@@ -6,6 +6,8 @@
 package com.fukushiro.controller;
 
 import com.fukushiro.models.Compra;
+import com.fukushiro.models.Singleton;
+import com.fukushiro.models.Usuario;
 import com.fukushiro.view.ClienteCompraView;
 import java.sql.ResultSet;
 import javax.swing.table.TableColumn;
@@ -30,8 +32,9 @@ public class ClienteCompraController {
     }
     
     public void startTable(){
+        Usuario u = Singleton.getInstance().getUsuarioLogado();
         String like = "";
-        ResultSet rs = new Compra().getRsLike(like);
+        ResultSet rs = new Compra().getRsLike(like, u.getId());
         TableModel model = DbUtils.resultSetToTableModel(rs);
         this.view.getTable().setModel(model);
         TableColumnModel tcm = this.view.getTable().getColumnModel();

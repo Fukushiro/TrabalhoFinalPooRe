@@ -101,6 +101,22 @@ public class Compra {
         return rs;
     }
     
+    public ResultSet getRsLike(String like, int id){
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "select c.id, u.nome, c.produto, c.valor from compras as c  left join usuarios as u on c.usuario = u.id where c.usuario = ? AND c.produto like ?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, like+"%");
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(Compra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+    
+    
     
     
     //get e set
