@@ -107,7 +107,7 @@ public class ClienteComprarProdutoController {
 
     public void colocarNoCarrinho() {
         setProduto();
-        System.out.println(produto);
+        System.out.println("ClienteComprarProdutoController-colocarNoCarrinho: " + produto);
         if (this.produto != null && ((Produto) this.produto).getQuantidade() > 0) {
 
             Singleton.getInstance().getUsuarioLogado().getCarrinho().addItem(produto);

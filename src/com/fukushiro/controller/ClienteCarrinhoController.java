@@ -76,9 +76,9 @@ public class ClienteCarrinhoController {
 
         TableColumnModel tcm = this.view.getTable().getColumnModel();
 
-        //tcm.removeColumn(tcm.getColumn(0));
-        //tcm.removeColumn(tcm.getColumn(0));       
-        //tcm.removeColumn(tcm.getColumn(0));
+        tcm.removeColumn(tcm.getColumn(0));
+        tcm.removeColumn(tcm.getColumn(0));       
+        tcm.removeColumn(tcm.getColumn(0));
     }
 
     public void comprar() {
@@ -101,5 +101,10 @@ public class ClienteCarrinhoController {
         double saldo = Singleton.getInstance().getUsuarioLogado().getSaldo();
 
         this.view.getLblSaldo().setText("R$" + saldo);
+    }
+    
+    public void removerTudo(){
+        Singleton.getInstance().getUsuarioLogado().getCarrinho().esvaziarCarrinho();
+        this.fillTable();
     }
 }

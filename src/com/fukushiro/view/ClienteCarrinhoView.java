@@ -87,6 +87,11 @@ public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
         });
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         lblSaldo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblSaldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -141,6 +146,10 @@ public class ClienteCarrinhoView extends javax.swing.JInternalFrame {
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         this.controller.onTableClick();
     }//GEN-LAST:event_tableMouseClicked
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+       this.controller.removerTudo();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
