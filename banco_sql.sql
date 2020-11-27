@@ -2,8 +2,8 @@ create database trabalho_final_poo;
 
 use trabalho_final_poo;
 
+insert into usuarios (nome, senha, tipo, saldo, criptografado) values("admin", "admin", 1, 0, 0);
 
-select * from usuarios;
 create table usuarios(
 	id int not null auto_increment,
     nome varchar(100) not null unique,
