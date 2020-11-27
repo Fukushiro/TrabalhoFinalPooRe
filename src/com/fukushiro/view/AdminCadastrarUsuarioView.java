@@ -44,6 +44,11 @@ public class AdminCadastrarUsuarioView extends javax.swing.JInternalFrame {
         txtSenha = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Registrar");

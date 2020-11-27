@@ -23,6 +23,10 @@ public class Carrinho {
     }
 
     public boolean comprar() {
+        double precoTotal = pegarValorCarrinho();
+        if(owner.getSaldo() < precoTotal){
+            return false;
+        }
         for (ICompravel p : produtos) {
             if (!p.checkComprar(owner)) {
                 return false;
@@ -63,6 +67,18 @@ public class Carrinho {
                 this.produtos.remove(i);
             }
         }
+    }
+    
+    public double pegarValorCarrinho(){
+        double val = 0;
+        
+        for(ICompravel i: produtos){
+            Produto p = (Produto)i;
+            val+=p.getPreco();
+        }
+        
+        
+        return val;
     }
     
     public void esvaziarCarrinho() {
