@@ -27,6 +27,7 @@ public class Usuario {
     private int tipo;
     private double saldo;
     private Carrinho carrinho;
+    private int criptografado;
     //dao
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -39,6 +40,16 @@ public class Usuario {
         this.tipo = tipo;
         this.saldo = saldo;
         this.carrinho = new Carrinho(this);
+    }
+
+    public Usuario(int id, String nome, String senha, int tipo, double saldo, int criptografado) {
+        this.id = id;
+        this.nome = nome;
+        this.senha = senha;
+        this.tipo = tipo;
+        this.saldo = saldo;
+        this.carrinho = new Carrinho(this);
+        this.criptografado = criptografado;
     }
 
     public Usuario() {
@@ -113,14 +124,15 @@ public class Usuario {
         }
         if (close) {
             Dao.getInstance().closeConnection();
+            con = null;
+            rs = null;
         }
-        con = null;
-        rs = null;
+
         return u;
 
     }
 
-    public Usuario authenticate(String nome, String password) {
+    public Usuario authenticate(String nome, String password, boolean criptografado) {
         Connection con = Dao.getInstance().getConnection();
         String sql = "select * from usuarios where nome=? AND senha=?";
 
@@ -129,14 +141,28 @@ public class Usuario {
             ps = con.prepareStatement(sql);
 
             ps.setString(1, nome);
-            ps.setString(2, new Criptografia().criptografar(password));
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String n = rs.getString("nome");
-                String senha = rs.getString("senha");
-                int tipo = rs.getInt("tipo");
-                double saldo = rs.getDouble("saldo");
+            if (criptografado) {
+                ps.setString(2, new Criptografia().criptografar(password));
+            } else {
+                ps.setString(2, password);
+            }
+            ResultSet r = ps.executeQuery();
+            while (r.next()) {
+                int id = r.getInt("id");
+                String n = r.getString("nome");
+                String senha = "";
+                if (!criptografado) {
+                    senha = new Criptografia().criptografar(r.getString("senha"));
+                    Usuario uN = new Usuario().getUsuario(id, false);
+                    uN.setSenha(senha);
+                    uN.setCriptografado(1);
+                    uN.update(false);
+                } else {
+                    senha = r.getString("senha");
+                }
+
+                double saldo = r.getDouble("saldo");
+                int tipo = r.getInt("tipo");
                 u = new Usuario(id, n, senha, tipo, saldo);
                 return u;
             }
@@ -166,6 +192,32 @@ public class Usuario {
         }
     }
 
+    public boolean update(boolean close) {
+        Connection con = Dao.getInstance().getConnection();
+        String sql = "update usuarios "
+                + "set saldo = ?, nome = ?, criptografado = ?, senha= ?"
+                + "where id = ?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, this.saldo);
+            ps.setString(2, this.nome);
+            ps.setInt(3, this.criptografado);
+            ps.setString(4, this.getSenha());
+            ps.setInt(5, this.id);
+            ps.executeUpdate();
+            if (close) {
+                Dao.getInstance().closeConnection();
+            }
+            return true;
+        } catch (SQLException ex) {
+            if (close) {
+                Dao.getInstance().closeConnection();
+            }
+            return false;
+        }
+    }
+
     //função
     public void depositar(double saldo) {
         this.saldo += saldo;
@@ -182,6 +234,14 @@ public class Usuario {
     }
 
     //get e set
+    public int getCriptografado() {
+        return criptografado;
+    }
+
+    public void setCriptografado(int criptografado) {
+        this.criptografado = criptografado;
+    }
+
     public int getId() {
         return id;
     }

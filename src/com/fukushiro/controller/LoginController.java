@@ -32,10 +32,14 @@ public class LoginController {
     public void logar() {
         Usuario u = (Usuario) this.helper.getObject();
         if (u != null) {
-            Usuario uLogado = u.authenticate(u.getNome(), u.getSenha());
+            Usuario uLogado = u.authenticate(u.getNome(), u.getSenha(), true);
+            if(uLogado == null){
+                uLogado = u.authenticate(u.getNome(), u.getSenha(), true);
+            }
             if (uLogado != null) {
                 Singleton.getInstance().setUsuarioLogado(uLogado);
                 if (uLogado.getTipo() == 0) {//cliente
+                   
                     MenuClienteView v = new MenuClienteView();
                     v.setVisible(true);
                     this.view.dispose();

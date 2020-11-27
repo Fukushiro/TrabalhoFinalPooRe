@@ -3,12 +3,14 @@ create database trabalho_final_poo;
 use trabalho_final_poo;
 
 
+select * from usuarios;
 create table usuarios(
 	id int not null auto_increment,
     nome varchar(100) not null unique,
     senha varchar(100) not null,
     tipo int not null default 0,
     saldo double not null default 0,
+    criptografado int not null default 1,
     primary key(id)
 );
 

@@ -48,6 +48,8 @@ public class MenuAdminView extends javax.swing.JFrame {
         menuItemGerenciarGenero = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         menuItemJogoGerenciar = new javax.swing.JMenuItem();
+        menuUsuario = new javax.swing.JMenu();
+        menuItemUsuarioCadastrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +112,18 @@ public class MenuAdminView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        menuUsuario.setText("Usuario");
+
+        menuItemUsuarioCadastrar.setText("Cadastrar");
+        menuItemUsuarioCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemUsuarioCadastrarActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(menuItemUsuarioCadastrar);
+
+        jMenuBar1.add(menuUsuario);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,6 +161,10 @@ public class MenuAdminView extends javax.swing.JFrame {
     private void menuItemJogoGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemJogoGerenciarActionPerformed
         this.controller.abrirGerenciarJogo();
     }//GEN-LAST:event_menuItemJogoGerenciarActionPerformed
+
+    private void menuItemUsuarioCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUsuarioCadastrarActionPerformed
+        this.controller.abrirCadastrarUsuario();
+    }//GEN-LAST:event_menuItemUsuarioCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,6 +212,8 @@ public class MenuAdminView extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemEmpresaGerenciar;
     private javax.swing.JMenuItem menuItemGerenciarGenero;
     private javax.swing.JMenuItem menuItemJogoGerenciar;
+    private javax.swing.JMenuItem menuItemUsuarioCadastrar;
+    private javax.swing.JMenu menuUsuario;
     // End of variables declaration//GEN-END:variables
 
     public MenuAdminController getController() {

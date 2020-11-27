@@ -5,6 +5,7 @@
  */
 package com.fukushiro.controller;
 
+import com.fukushiro.view.AdminCadastrarUsuarioView;
 import com.fukushiro.view.AdminConsoleView;
 import com.fukushiro.view.AdminEmpresaView;
 import com.fukushiro.view.AdminGeneroView;
@@ -42,6 +43,12 @@ public class MenuAdminController {
     
     public void abrirGerenciarJogo(){
         AdminJogoView view = new AdminJogoView();
+        view.setVisible(true);
+        this.view.getDesktop().add(view);
+    }
+    
+    public void abrirCadastrarUsuario(){
+        AdminCadastrarUsuarioView view = new AdminCadastrarUsuarioView();
         view.setVisible(true);
         this.view.getDesktop().add(view);
     }
